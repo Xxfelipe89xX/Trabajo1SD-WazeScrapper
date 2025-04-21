@@ -1,0 +1,9 @@
+{
+    "name": "generador",
+    "version": "1.0.0",
+    "main": "generador.js",
+    "dependencies": {
+      "mongodb": "^5.8.0"
+    }
+  }
+  
