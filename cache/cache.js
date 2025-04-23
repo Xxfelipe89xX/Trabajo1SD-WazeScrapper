@@ -60,7 +60,9 @@ app.get('/consultar', (req, res) => {
     if (value) res.json(value);
     else res.status(404).send("No encontrado en caché");
 });
-
+app.get('/claves', (req, res) => {
+    res.json(cache.orden);
+});
 app.listen(PORT, () => {
     console.log(`Servidor de caché en puerto ${PORT}, política ${POLITICA}`);
 });
