@@ -16,7 +16,7 @@ async function generarConsultas() {
     while (true) {
         const comuna = comunas[Math.floor(Math.random() * comunas.length)];
         const key = `consulta:${comuna}`;
-        const resultados = await collection.find({ ciudad: comuna }).limit(5).toArray();
+        const resultados = await collection.find({ city: comuna }).limit(5).toArray();
         console.log(`Consulta: ${comuna} → ${resultados.length} eventos`);
 
         // Simula envío al cache
