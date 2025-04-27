@@ -26,8 +26,7 @@ async function generarConsultas() {
             body: JSON.stringify({ eventos: resultados })
         });
 
-        // Esperar exactamente 15 segundos
-        await sleep(15000);
+        await sleep(1000);
     }
 }
 
