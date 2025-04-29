@@ -2,19 +2,13 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-// Configuración actual
-const TAMANO_CACHE = 10; // Tamaño para LRU
-const POLITICA = process.env.CACHE_POLICY || 'LRU'; // FIFO o LRU
-
-// const TAMANO_CACHE = 15;
-// const POLITICA = process.env.CACHE_POLICY || 'FIFO';
+const TAMANO_CACHE = 10; // Cambiar a 100 para comparar resultados
 
 app.use(express.json());
 
 class Cache {
-    constructor(tamano, politica) {
+    constructor(tamano) {
         this.tamano = tamano;
-        this.politica = politica;
         this.cache = new Map();
         this.orden = [];
     }
@@ -22,40 +16,34 @@ class Cache {
     get(key) {
         if (!this.cache.has(key)) return null;
 
-        if (this.politica === 'LRU') {
-            // Si es política LRU, movemos la clave al final
-            this.orden = this.orden.filter(k => k !== key);
-            this.orden.push(key);
-        }
-        // En FIFO no se hace nada especial en get
+        // Política LRU: mover al final
+        this.orden = this.orden.filter(k => k !== key);
+        this.orden.push(key);
         return this.cache.get(key);
     }
 
     set(key, value) {
         if (this.cache.has(key)) {
-            if (this.politica === 'LRU') {
-                // Si ya existe y es LRU, actualizar el orden
-                this.orden = this.orden.filter(k => k !== key);
-                this.orden.push(key);
-            }
-            // Actualizar el valor
+            // Actualizar orden de acceso
+            this.orden = this.orden.filter(k => k !== key);
+            this.orden.push(key);
             this.cache.set(key, value);
             return;
         }
 
-        // Si el cache está lleno
         if (this.cache.size >= this.tamano) {
-            const claveAEliminar = this.orden.shift(); // Siempre sacamos el primero en la lista
-            this.cache.delete(claveAEliminar);
+            const claveAntigua = this.orden.shift();
+            this.cache.delete(claveAntigua);
         }
 
-        // Insertamos al final
         this.cache.set(key, value);
         this.orden.push(key);
     }
 }
 
-const cache = new Cache(TAMANO_CACHE, POLITICA);
+const cache = new Cache(TAMANO_CACHE);
+
+// Endpoints
 
 app.post('/guardar', (req, res) => {
     const key = req.query.key;
@@ -77,5 +65,5 @@ app.get('/claves', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor de caché en puerto ${PORT}, política ${POLITICA}`);
+    console.log(`Servidor de caché en puerto ${PORT}, política LRU, tamaño ${TAMANO_CACHE}`);
 });
