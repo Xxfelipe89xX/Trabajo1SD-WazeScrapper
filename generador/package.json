@@ -4,6 +4,7 @@
     "main": "generador.js",
     "dependencies": {
       "mongodb": "^5.8.0"
+      "node-fetch": "^2.6.11"
     }
   }
   
