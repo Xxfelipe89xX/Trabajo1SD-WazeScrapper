@@ -188,9 +188,3 @@ docker-compose logs -f nombre_servicio
 - Permisos en Docker: Verifica que tu usuario esté agregado al grupo `docker`.
 
 ---
-
-## Contacto
-
-Proyecto desarrollado por **[Tu Nombre / Tu equipo]**.
-
----
