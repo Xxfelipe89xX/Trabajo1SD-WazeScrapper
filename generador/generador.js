@@ -51,7 +51,7 @@ async function generarConsultas() {
         }
 
         index = (index + 1) % comunas.length;
-        await sleep(5000); // 5 segundos
+        await sleep(1000); // 5 segundos
     }
 }
 
