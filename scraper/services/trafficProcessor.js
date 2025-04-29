@@ -1,4 +1,4 @@
-const { insertarEventos } = require('../almacenamiento/almacenamiento');
+const { insertarEventos } = require('../../almacenamiento/almacenamiento');
 
 async function processTrafficData(data, ciudad) {
     try {
