@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-const TAMANO_CACHE = 10; // Cambiar a 100 para comparar resultados
+const TAMANO_CACHE = 15; // Pruebas realizadas con 10 y 15
 
 app.use(express.json());
 
@@ -16,7 +16,6 @@ class Cache {
     get(key) {
         if (!this.cache.has(key)) return null;
 
-        // Política LRU: mover al final
         this.orden = this.orden.filter(k => k !== key);
         this.orden.push(key);
         return this.cache.get(key);
