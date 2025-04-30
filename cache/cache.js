@@ -16,7 +16,6 @@ class Cache {
     get(key) {
         if (!this.cache.has(key)) return null;
 
-        // Política LRU: mover al final
         this.orden = this.orden.filter(k => k !== key);
         this.orden.push(key);
         return this.cache.get(key);
