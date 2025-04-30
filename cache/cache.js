@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-const TAMANO_CACHE = 5; // Cambiar a 100 para comparar resultados
+const TAMANO_CACHE = 10; // Cambiar a 100 para comparar resultados
 
 app.use(express.json());
 
