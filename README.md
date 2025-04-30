@@ -159,28 +159,6 @@ docker-compose down
 
 ---
 
-## Tips útiles
-
-- Para actualizar código sin borrar datos:
-
-```bash
-docker-compose up -d --build --force-recreate
-```
-
-- Para ver contenedores activos:
-
-```bash
-docker ps
-```
-
-- Para ver logs de un contenedor:
-
-```bash
-docker-compose logs -f nombre_servicio
-```
-
----
-
 ## Troubleshooting
 
 - Error de conexión en caché: Asegúrate que `localhost:3000` esté libre.
