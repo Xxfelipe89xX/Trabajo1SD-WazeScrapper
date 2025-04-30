@@ -7,7 +7,8 @@ const collectionName = "eventos";
 
 const comunas = [
     "Santiago", "Maipú", "Providencia", "Puente Alto", "Las Condes",
-    "Ñuñoa", "Recoleta", "San Miguel", "La Florida", "Pudahuel"
+    "Ñuñoa", "Recoleta", "San Miguel", "La Florida", "Pudahuel",
+    "La Pintana", "Renca", "Estación Central", "Peñalolén", "Independencia"
 ];
 
 let index = 0;
