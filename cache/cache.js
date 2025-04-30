@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-const TAMANO_CACHE = 10; // Cambiar a 100 para comparar resultados
+const TAMANO_CACHE = 5; // Cambiar a 100 para comparar resultados
 
 app.use(express.json());
 
@@ -62,6 +62,18 @@ app.get('/consultar', (req, res) => {
 
 app.get('/claves', (req, res) => {
     res.json(cache.orden);
+});
+app.get('/ciudades', async (req, res) => {
+    try {
+        const client = new MongoClient(MONGO_URI);
+        await client.connect();
+        const collection = client.db("trafico").collection("eventos");
+        const ciudades = await collection.distinct("city");
+        res.json(ciudades);
+        await client.close();
+    } catch (err) {
+        res.status(500).send("Error al obtener ciudades");
+    }
 });
 
 app.listen(PORT, () => {
