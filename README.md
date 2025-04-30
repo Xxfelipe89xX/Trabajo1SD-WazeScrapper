@@ -27,8 +27,8 @@ Todo el sistema está **dockerizado** para fácil ejecución.
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu_usuario/plataforma-trafico.git
-cd plataforma-trafico
+git clone https://github.com/Xxfelipe89xX/Trabajo1SD-WazeScrapper.git
+cd Trabajo1SD-WazeScrapper
 ```
 
 ### 2. Requisitos
