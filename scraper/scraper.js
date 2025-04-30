@@ -34,6 +34,5 @@ async function runScraper() {
 
     await browser.close();
 }
-// Al final de scraper.js
-setInterval(runScraper, 5 * 60 * 1000); // Cada 10 minutos
+setInterval(runScraper, 5 * 60 * 1000);
 runScraper().catch(console.error);
