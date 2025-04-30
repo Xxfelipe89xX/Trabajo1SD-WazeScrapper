@@ -127,17 +127,16 @@ curl "http://localhost:3000/consultar?key=consulta:Santiago"
 
 ---
 
-## Cambiar política de caché
+## Cambiar tamaño de caché
 
-Actualmente configurado como **LRU** con tamaño **10**.
+Actualmente configurado como **LRU**.
 
-Para cambiar a **FIFO** y tamaño **15**:
+Pruebas realizadas con tamaño 5 y 10 en caché
 
 1. Modificar `cache.js`:
 
 ```javascript
-const TAMANO_CACHE = 15;
-const POLITICA = process.env.CACHE_POLICY || 'FIFO';
+const TAMANO_CACHE = 10;
 ```
 
 2. Luego reconstruir solo el servicio de caché:
@@ -156,13 +155,5 @@ docker-compose down
 ```
 
  Usa solo `docker-compose down` para NO eliminar la base de datos (MongoDB).
-
----
-
-## Troubleshooting
-
-- Error de conexión en caché: Asegúrate que `localhost:3000` esté libre.
-- Puppeteer no inicia: Puede faltar alguna librería en el contenedor (ya solucionado en el Dockerfile).
-- Permisos en Docker: Verifica que tu usuario esté agregado al grupo `docker`.
 
 ---
