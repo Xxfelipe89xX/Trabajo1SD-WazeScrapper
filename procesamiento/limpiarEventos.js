@@ -29,9 +29,15 @@ function limpiarEvento(e) {
   const descripcion = e.street || subtipo || 'Sin descripción';
 
   let tipo = 'Otro';
+
   if (tipoCrudo.includes('accident')) tipo = 'Accidente';
-  else if (tipoCrudo.includes('congestion')) tipo = 'Congestión';
+  else if (tipoCrudo.includes('congestion') || tipoCrudo.includes('jam')) tipo = 'Congestión';
   else if (tipoCrudo.includes('hazard')) tipo = 'Peligro';
+  else if (tipoCrudo.includes('road_closed')) tipo = 'Corte de ruta';
+  else if (tipoCrudo.includes('construction')) tipo = 'Construcción';
+  else if (tipoCrudo.includes('weather')) tipo = 'Clima';
+  else if (tipoCrudo.includes('police')) tipo = 'Policía';
+  else if (tipoCrudo.includes('event')) tipo = 'Evento';
 
   return {
     comuna,
