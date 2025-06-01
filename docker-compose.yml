@@ -13,6 +13,8 @@ services:
     build:
       context: ./scraper
       dockerfile: Dockerfile
+    volumes:
+      - ./almacenamiento:/app/almacenamiento
     depends_on:
       - mongo
     environment:
@@ -49,7 +51,7 @@ services:
       context: ./procesamiento
       dockerfile: Dockerfile.pig
     volumes:
-      - ./datos:/workspace/datos
+      - ./procesamientodatos:/workspace/procesamiento/datos
       - ./resultados:/workspace/resultados
 
 volumes:
