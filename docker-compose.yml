@@ -36,5 +36,21 @@ services:
     depends_on:
       - generador
 
+  limpieza:
+    build:
+      context: ./procesamiento
+      dockerfile: Dockerfile.limpieza
+    volumes:
+      - ./trafico.eventos.json:/app/trafico.eventos.json:ro
+      - ./datos:/app/datos
+
+  pig:
+    build:
+      context: ./procesamiento
+      dockerfile: Dockerfile.pig
+    volumes:
+      - ./datos:/workspace/datos
+      - ./resultados:/workspace/resultados
+
 volumes:
   mongo-data:
