@@ -17,4 +17,5 @@ ENV PATH="$JAVA_HOME/bin:$PIG_HOME/bin:$PATH"
 COPY analisis_eventos.pig .
 COPY ../datos ./datos
 
-CMD ["pig", "-x", "local", "analisis_eventos.pig"]
+# Elimina resultados cada vez que se inicia el contenedor
+ENTRYPOINT rm -rf /workspace/resultados/* && exec pig -x local analisis_eventos.pig

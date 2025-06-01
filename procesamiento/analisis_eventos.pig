@@ -10,12 +10,16 @@ conteo_comuna = FOREACH por_comuna GENERATE group AS comuna, COUNT(eventos) AS t
 por_tipo = GROUP eventos BY tipo;
 conteo_tipo = FOREACH por_tipo GENERATE group AS tipo, COUNT(eventos) AS total;
 
-por_comuna_tipo = GROUP eventos BY (comuna, tipo);
-conteo_comuna_tipo = FOREACH por_comuna_tipo GENERATE
-    group.comuna AS comuna,
-    group.tipo AS tipo,
-    COUNT(eventos) AS total;
+eventos_con_dia = FOREACH eventos GENERATE 
+  comuna, 
+  tipo, 
+  SUBSTRING(fecha, 0, 10) AS dia, 
+  descripcion;
+agrupados = GROUP eventos_con_dia BY dia;
+conteo_fecha = FOREACH agrupados GENERATE 
+  group AS dia, 
+  COUNT(eventos_con_dia) AS cantidad_eventos;
 
 STORE conteo_comuna INTO 'resultados/conteo_comuna' USING PigStorage(',');
 STORE conteo_tipo INTO 'resultados/conteo_tipo' USING PigStorage(',');
-STORE conteo_comuna_tipo INTO 'resultados/conteo_comuna_tipo' USING PigStorage(',');
+STORE conteo_fecha INTO 'resultados/conteo_fecha' USING PigStorage(',');
