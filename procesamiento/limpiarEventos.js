@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const archivoEntrada = '/home/postroy/Descargas/trafico.eventos.json';
+const archivoEntrada = './trafico.eventos.json'; //Cambiar está dirección para poder realizar la limpieza de datos
 const archivoSalida = './datos/eventos_limpios.csv';
 
 function parsearEventos(texto) {
