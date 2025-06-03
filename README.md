@@ -148,6 +148,34 @@ docker-compose up -d cache
 
 ---
 
+## Procesamiento y análisis de datos
+
+El proyecto incluye un módulo adicional de procesamiento para trabajar con los datos extraídos por el scraper.
+
+### Componentes del procesamiento
+
+- **limpiarEventos.js**: Script en Node.js que limpia y organiza los datos crudos guardados en `trafico.eventos.json`.
+- **análisis.pig**: Script en Apache Pig que analiza los datos limpios y genera archivos `.csv` agrupados por comuna, tipo de evento y fecha.
+
+### Estructura del flujo
+
+1. **Entrada**: `trafico.eventos.json`  
+   Puedes descargarlo desde el siguiente enlace: https://drive.google.com/file/d/10wpm9Dh3B6muQevbYuIO52rHHQ7vviqd/view?usp=drive_link
+
+2. **Limpieza**: Ejecutar `limpiarEventos.js` dentro del contenedor de procesamiento.
+
+```bash
+docker compose up limpieza
+```
+
+4. **Análisis**: Ejecutar `análisis.pig` en Apache Pig para generar estadísticas.
+
+```bash
+docker compose up pig
+```
+
+6. **Salida**: Los resultados del análisis se exportan en la carpeta `/resultados`.
+
 ## Detener servicios
 
 ```bash
