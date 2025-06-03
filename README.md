@@ -8,6 +8,7 @@ Este proyecto es una plataforma distribuida para capturar y analizar informació
 -  **Almacenamiento**: Guarda los eventos en **MongoDB**.
 -  **Generador de tráfico**: Simula consultas de eventos almacenados.
 -  **Sistema de caché**: Responde consultas frecuentes más rápido (FIFO o LRU).
+-  **Procesamiento**: Limpieza y filtrado de datos.
 
 Todo el sistema está **dockerizado** para fácil ejecución.
 
@@ -19,6 +20,7 @@ Todo el sistema está **dockerizado** para fácil ejecución.
 - Puppeteer
 - MongoDB
 - Docker y Docker Compose
+- Apache Pig
 
 ---
 
