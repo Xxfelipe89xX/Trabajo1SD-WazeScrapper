@@ -1,6 +1,7 @@
 FROM openjdk:11
 
-WORKDIR /workspace
+ARG UID=1000
+ARG GID=1000
 
 RUN apt-get update && \
     apt-get install -y wget tar python && \
@@ -8,14 +9,19 @@ RUN apt-get update && \
     tar -xzf pig-0.17.0.tar.gz && \
     mv pig-0.17.0 /opt/pig && \
     rm pig-0.17.0.tar.gz && \
-    chmod +x /opt/pig/bin/pig
+    chmod +x /opt/pig/bin/pig && \
+    groupadd -g ${GID} piggroup && \
+    useradd -u ${UID} -g piggroup -m piguser
 
 ENV PIG_HOME=/opt/pig
 ENV JAVA_HOME=/usr/local/openjdk-11
 ENV PATH="$JAVA_HOME/bin:$PIG_HOME/bin:$PATH"
 
+USER piguser
+
+WORKDIR /workspace
+
 COPY analisis_eventos.pig .
 COPY ../datos ./datos
 
-# Elimina resultados cada vez que se inicia el contenedor
 ENTRYPOINT rm -rf /workspace/resultados/* && exec pig -x local analisis_eventos.pig
