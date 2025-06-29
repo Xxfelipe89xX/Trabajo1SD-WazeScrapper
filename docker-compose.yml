@@ -50,6 +50,7 @@ services:
     build:
       context: ./procesamiento
       dockerfile: Dockerfile.pig
+    user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - ./procesamientodatos:/workspace/procesamiento/datos
       - ./resultados:/workspace/resultados
