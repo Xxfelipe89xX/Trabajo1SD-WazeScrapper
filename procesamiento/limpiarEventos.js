@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const archivoEntrada = './trafico.eventos.json';
-const archivoSalida = './datos/eventos_limpios.csv';
+const archivoSalida = path.join(__dirname, 'datos', 'eventos_limpios.csv');
 
 function parsearEventos(texto) {
   try {
@@ -64,7 +64,7 @@ try {
     `${e.comuna},${e.tipo},${e.fecha},"${e.descripcion}"`
   );
 
-  fs.mkdirSync('./datos', { recursive: true });
+  fs.mkdirSync(path.join(__dirname, 'datos'), { recursive: true });
   fs.writeFileSync(archivoSalida, cabecera + lineas.join('\n'), 'utf-8');
   console.log(`${eventosUnicos.length} eventos limpios guardados en ${archivoSalida}`);
 } catch (err) {
