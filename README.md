@@ -9,6 +9,7 @@ Este proyecto es una plataforma distribuida para capturar y analizar informació
 -  **Generador de tráfico**: Simula consultas de eventos almacenados.
 -  **Sistema de caché**: Responde consultas frecuentes más rápido (FIFO o LRU).
 -  **Procesamiento**: Limpieza y filtrado de datos.
+-  **Visualización**: Toma los resultados del modulo anterior y se pueden mostrar mediante Kibana.
 
 Todo el sistema está **dockerizado** para fácil ejecución.
 
@@ -21,6 +22,8 @@ Todo el sistema está **dockerizado** para fácil ejecución.
 - MongoDB
 - Docker y Docker Compose
 - Apache Pig
+- Elasticsearch
+- Kibana
 
 ---
 
@@ -37,7 +40,7 @@ cd Trabajo1SD-WazeScrapper
 
 - Docker
 - Docker Compose
-- Puertos disponibles: `27017` (MongoDB), `3000` (caché)
+- Puertos disponibles: `27017` (MongoDB), `3000` (caché), `5601` (Kibana)
 
 ### 3. Configurar archivos
 
@@ -72,6 +75,7 @@ docker-compose up -d
 | Generador        | Genera consultas automáticas       | Interno |
 | MongoDB          | Base de datos de eventos           | localhost:27017 |
 | Caché            | Cache de respuestas rápidas        | localhost:3000 |
+| Kibana            | Interfaz de visualización de datos | localhost:5601 |
 
 ---
 
@@ -177,6 +181,41 @@ docker compose up pig
 ```
 
 6. **Salida**: Los resultados del análisis se exportan en la carpeta `/resultados`.
+
+### Visualización de datos (Elasticsearch + Kibana)
+
+Se implementó un módulo de visualización basado en **Elasticsearch** y **Kibana**:
+
+- **Elasticsearch**: Indexa los resultados procesados automáticamente desde la carpeta `resultados/`.
+- **Kibana**: Permite explorar y crear dashboards interactivos sobre los datos indexados.
+- El servicio de visualización elimina el índice antes de indexar para evitar duplicados.
+- Acceso a Kibana: [http://localhost:5601](http://localhost:5601)
+
+#### Uso rápido
+
+1. Levanta todos los servicios:
+   ```bash
+   docker compose up --build
+   ```
+2. Espera a que se generen los archivos y se levanten los servicios.
+3. Accede a Kibana y crea un patrón de índice `eventos_procesados` para explorar los datos.
+
+
+---
+
+## Configuración de usuario para Pig y permisos de archivos
+
+Para evitar que los archivos generados por Pig tengan permisos de root, ahora se especifica el usuario dentro del contenedor Pig:
+
+- Se utiliza el usuario con UID y GID 1000 (usuario estándar).
+- Los valores de UID y GID se definen en el archivo `.env`:
+  ```env
+  UID=1000
+  GID=1000
+  ```
+- Esto asegura que los archivos generados en la carpeta `resultados/` sean editables por el usuario local y no requieran permisos de superusuario para ser eliminados o modificados.
+
+---
 
 ## Detener servicios
 
