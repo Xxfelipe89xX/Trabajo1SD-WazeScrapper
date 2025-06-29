@@ -42,9 +42,12 @@ services:
     build:
       context: ./procesamiento
       dockerfile: Dockerfile.limpieza
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
     volumes:
       - ./trafico.eventos.json:/app/trafico.eventos.json:ro
-      - ./datos:/app/datos
+      - ./procesamiento/datos:/app/datos
 
   pig:
     build:
@@ -54,7 +57,7 @@ services:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     volumes:
-      - ./procesamientodatos:/workspace/procesamiento/datos
+      - ./procesamiento/datos:/workspace/datos
       - ./resultados:/workspace/resultados
 
   elasticsearch:
