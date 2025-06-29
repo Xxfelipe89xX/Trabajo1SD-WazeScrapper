@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const archivoEntrada = './trafico.eventos.json'; //Cambiar está dirección para poder realizar la limpieza de datos
+const archivoEntrada = './trafico.eventos.json';
 const archivoSalida = './datos/eventos_limpios.csv';
 
 function parsearEventos(texto) {
