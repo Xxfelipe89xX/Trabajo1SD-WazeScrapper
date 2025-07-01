@@ -16,7 +16,7 @@ services:
       context: ./scraper
       dockerfile: Dockerfile
     volumes:
-      - ./almacenamiento:/app/almacenamiento
+      - ./almacenamiento:/app/almacenamiento:z
     depends_on:
       - mongo
     environment:
@@ -109,7 +109,7 @@ services:
       - INDEX_NAME=eventos_procesados
       - DATA_DIR=/app/resultados
     volumes:
-      - ./resultados:/app/resultados:ro
+      - ./resultados:/app/resultados:ro,z
     depends_on:
       - elasticsearch
     networks:
