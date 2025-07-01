@@ -8,6 +8,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - redcache
 
   scraper:
     build:
@@ -19,6 +21,8 @@ services:
       - mongo
     environment:
       - MONGO_URI=mongodb://mongo:27017
+    networks:
+      - redcache
 
   generador:
     build:
@@ -35,8 +39,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    environment:
+      - ELASTIC_URI=http://elasticsearch:9200
     depends_on:
-      - generador
+      - elasticsearch
+    networks:
+      - redcache
 
   limpieza:
     build:
@@ -48,6 +56,8 @@ services:
     volumes:
       - ./trafico.eventos.json:/app/trafico.eventos.json:ro
       - ./procesamiento/datos:/app/datos
+    networks:
+      - redcache
 
   pig:
     build:
@@ -59,6 +69,8 @@ services:
     volumes:
       - ./procesamiento/datos:/workspace/datos
       - ./resultados:/workspace/resultados
+    networks:
+      - redcache
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
@@ -71,6 +83,8 @@ services:
       - "9200:9200"
     volumes:
       - esdata:/usr/share/elasticsearch/data
+    networks:
+      - redcache
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.13.4
@@ -82,6 +96,8 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
+    networks:
+      - redcache
 
   visualizacion:
     build:
@@ -96,7 +112,13 @@ services:
       - ./resultados:/app/resultados:ro
     depends_on:
       - elasticsearch
+    networks:
+      - redcache
 
 volumes:
   mongo-data:
   esdata:
+
+networks:
+  redcache:
+    driver: bridge
