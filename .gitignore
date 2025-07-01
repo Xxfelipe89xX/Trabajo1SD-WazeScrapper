@@ -4,4 +4,4 @@ echo "*.log" >> .gitignore
 echo ".env" >> .gitignore
 echo "mongo_data/" >> .gitignore
 echo "resultados/" >> .gitignore
-echo "trafico.eventos.json" >> .gitignore
+trafico.eventos.json
